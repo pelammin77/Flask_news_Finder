@@ -1,3 +1,9 @@
+"""  
+file: main.py 
+Author Petri Lamminaho 
+
+"""
+
 from flask import Flask, request,render_template, url_for
 from feedParser import Feed
 from text_tb import get_KWs
