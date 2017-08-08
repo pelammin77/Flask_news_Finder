@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block page_content %}
+<h1>News Summary </h1>
+<h2> {{header}}  </h2>
+
+ <form method="post" action="{{ url_for('similarity') }}">
+    <input type="hidden" readonly="readonly" name="title_field" size="1" value="{{header}}" /><br />
+    <input type="submit" value="Find simulari article " />
+</form>
+
+<h3>Authors:</h3>
+{% for a in authors%}
+<ul>
+ <li>{{a}}</li>
+
+</ul>
+{% endfor%}
+<h3>Publish date</h3>
+<p>{{publish_day}} </p>
+
+<h4> Article has {{count_s}} sentences and {{count_w}} words  </h4>
+<h3>Key words are:</h3>
+
+
+{% for k in key_chunnks%}
+<ul>
+ <li>{{k[0]}}</li>
+
+</ul>
+{% endfor%}
+
+
+<h3> 3 top sentences </h3>
+<hr>
+
+{% for s in summary %}
+<ul>
+<li>{{s}}</li>
+ </ul>
+
+{% endfor%}
+
+<h3>Similarity news articles </h3>
+{% for sp in sim_posts %}
+<ul>
+
+    <li><h3>{{sp.title}}</h3> <a href={{sp.link}}> {{sp.link}}</a></li>
+ </ul>
+
+{% endfor%}
+
+
+{% endblock %}

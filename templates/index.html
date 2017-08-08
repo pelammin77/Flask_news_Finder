@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block page_content %}
+{% include "navBar.html" %}
+{% include "sideBar.html" %}
+
+  <div class="col-md-8 paddingTop20">
+      <h1>Find news </h1>
+      <h3>Available feeds are:</h3>
+        {% for name in feeds_names %}
+            <p><a>{{loop.index}}.<b>{{name}}</b></a></p>
+        {% endfor %}
+    {% include "newsArea.html" %}
+  </div>
+ <div class="col-md-4 paddingTop20">
+{% include "footer.html" %}
+
+ </div>
+    {% endblock %}
+

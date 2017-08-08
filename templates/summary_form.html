@@ -1,0 +1,4 @@
+<form method="post" action="{{ url_for('analyze') }}">
+    <input type="hidden" readonly="readonly" name="link_field" size="100" value="{{news_posts[loop.index-1][0].link}}" /><br />
+    <input type="submit" value="Summary" />
+</form>

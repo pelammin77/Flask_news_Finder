@@ -1,0 +1,68 @@
+
+
+<div class="col-md-10 blogShort">
+                         {% for feed_name in feeds_names %}
+
+                         <h1>{{feed_name}}</h1>
+                         <hr>
+
+
+                     <article>
+                          <h4><strong>1.{{news_posts[loop.index-1][0].title}}</strong></h4>
+                         <form method="post" action="{{ url_for('analyze') }}">
+    <input type="hidden" readonly="readonly" name="link_field" size="1" value="{{news_posts[loop.index-1][0].link}}" /><br />
+    <input type="submit" value="Summary" />
+</form>
+
+
+
+                         <!--<a class="btn btn-blog pull-left marginBottom10" href="analyze/www.jyu.fi">ANALYZES THE NEWS</a>
+                        -->
+
+                         <a class="btn btn-blog pull-right marginBottom10" href={{news_posts[loop.index-1][0].link}}>SHOW WHOLE NEWS</a>
+
+
+                     </article>
+
+                        <hr>
+                 </div>
+                     <br>
+
+                  <div class="col-md-10 blogShort">
+
+
+                     <article>
+                         <h4> <strong>2.{{news_posts[loop.index-1][1].title}}</strong></h4>
+
+
+                                <a class="btn btn-blog pull-right marginBottom10" href={{news_posts[loop.index-1][1].link}}>SHOW WHOLE NEWS</a>
+                                <form method="post" action="{{ url_for('analyze') }}">
+    <input type="hidden" readonly="readonly" name="link_field" size="100" value="{{news_posts[loop.index-1][1].link}}" /><br />
+    <input type="submit" value="Summary" />
+</form>
+
+                         </article>
+
+                         <hr>
+                  </div>
+                    <br>
+                  <div class="col-md-10 blogShort">
+
+                      <article>
+                           <h4><strong>3.{{news_posts[loop.index-1][2].title}}</strong></h4>
+
+                          <a class="btn btn-blog pull-right marginBottom10" href={{news_posts[loop.index-1][2].link}}>SHOW WHOLE NEWS</a>
+                          <form method="post" action="{{ url_for('analyze') }}">
+    <input type="hidden" readonly="readonly" name="link_field" size="100" value="{{news_posts[loop.index-1][2].link}}" /><br />
+
+    <input type="submit" value="Summary" />
+</form>
+                      </article>
+                        <hr>
+
+                      {% endfor %}
+
+
+                  </div>
+
+
