@@ -33,14 +33,18 @@ feeds_addresses = [
         ]
 
 
-def get_img_cnt(url):
+def get_element_count(url, tag="img"):
     from bs4 import BeautifulSoup
     import requests
 
     response = requests.get(url)
     soup = BeautifulSoup(response.content)
 
-    return len(soup.find_all('img'))
+    return len(soup.find_all(tag))
+
+
+
+
 
 def get_article_text(link):
     """
@@ -150,17 +154,20 @@ def analyze():
     link = request.form['link_field']
     header, text, authors, publish_day, key_words = get_article_text(link)
     summary,  key_chunnks, count_s, count_w = make_summary(text)
-    img_count = get_img_cnt(link)
-    kw = get_KWs(text)
+    img_count = get_element_count(link)
+    video_count = get_element_count(link, 'video')
+    #kw = get_KWs(text)
  #   print(kw)
     if publish_day == None:
         publish_day = "unknown"
 
     sim_posts = find_sim_post_title(header)
+    sim_posts_count = len(sim_posts)
     return render_template("summary.html", link=link, header=header, summary=summary,
                            authors=authors, publish_day=publish_day, count_s=count_s,
                            count_w=count_w, key_chunnks=key_chunnks, sim_posts=sim_posts,
-                           img_count=img_count)
+                           img_count=img_count, video_count=video_count,
+                           sim_posts_count=sim_posts_count)
 
 @app.route('/clean_article/', methods=['POST'])
 def clean_article():

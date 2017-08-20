@@ -1,34 +1,27 @@
 {% extends "base.html" %}
 {% block page_content %}
 
-<h1> {{header}}  </h1>
+<div class="container">
 
-  <div class="row">
-      <div class="col-sm-2">
-          <a class="btn btn-default" href={{link}}> Open the article </a>
+<div class="jumbotron">
+    <div class="row">
+          <div class="col-md-2">
 
-      </div>
-      <div class="col-sm-2">
-
-<form method="post" action="{{ url_for('clean_article') }}">
-    <input type="hidden" readonly="readonly" name="link_field" size="100" value="{{link}}" />
-    <input type="submit" value=" Show clean version" />
-
-</form>
-
-      </div>
-  </div>
-
-  <div class="jumbotron">
+     <a class="btn btn-default" href={{link}}> Open the article </a>
+          </div>
 
 
-          <h2> Article has {{count_s}} sentences and {{count_w}} words  </h2>
+<br>
+<div class="container">
+
+    <h1> Article summary: </h1>
+    <h2>{{header}} </h2>
       <div class="row">
           <div class="col-md-1">
           </div>
 
           <div class="col-md-4">
-          <h2> 3 top sentences </h2>
+              <h2><u> 3 top sentences</u> </h2>
           {% for s in summary %}
           <ul>
               <li><b>{{s}}</b></li>
@@ -42,7 +35,7 @@
 
           </div>
           <div class="col-md-4">
-               <h2>Key words </h2>
+              <h2><u>Key words</u> </h2>
 
 
 {% for k in key_chunnks%}
@@ -52,12 +45,32 @@
 </ul>
 {% endfor%}
 
+              <h3> Article has {{count_s}} sentences</h3>
+               <h3> Article has {{count_w}} words  </h3>
+              <h3> Article has {{img_count}} image(s)</h3>
           </div>
+          </div>
+
+
           </div>
 
       </div>
+     <div class="col-md-2">
+
+        <form method="post" action="{{ url_for('clean_article') }}">
+          <input type="hidden" readonly="readonly" name="link_field" size="100" value="{{link}}" />
+         <input type="submit" value=" Show clean version" />
+       </form>
+            </div>
+
+</div>
+
 
   </div>
+
+
+
+
 <!--
 <h3>Authors:</h3>
 {% for a in authors%}
@@ -69,15 +82,23 @@
 <h3>Publish date</h3>
 <p>{{publish_day}} </p>
 -->
-<h2> Article has {{img_count}} image(s)</h2>
-<h3>Similarity news articles </h3>
-{% for sp in sim_posts %}
-<ul>
 
-    <li><h3>{{sp.title}}</h3> <a href={{sp.link}}> {{sp.link}}</a></li>
+
+
+
+
+<div class="container">
+
+    <h3> Find {{sim_posts_count}} similarity posts   </h3>
+    {% for sp in sim_posts %}
+     <div class="well">
+    <ul>
+        <li><h3>{{sp.title}}</h3> <a href={{sp.link}}> {{sp.link}}</a></li>
  </ul>
-
+    </div>
 {% endfor%}
+
+</div>
 
 
 {% endblock %}
