@@ -32,9 +32,15 @@ feeds_addresses = [
                 'http://www.cnbc.com/id/100003114/device/rss/rss.html'
         ]
 
-def get_post(post_id):
-    pass
 
+def get_img_cnt(url):
+    from bs4 import BeautifulSoup
+    import requests
+
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content)
+
+    return len(soup.find_all('img'))
 
 def get_article_text(link):
     """
@@ -78,6 +84,16 @@ def get_news(posts):
     return posts
 
 
+def clean_article_content(link):
+    from cleaner import Html_cleaner
+    import urllib.request
+
+    htmlcode = urllib.request.urlopen(link).read().decode('utf-8')
+    clean_page = Html_cleaner(htmlcode, link)
+    header = clean_page.get_article_title()
+    content = clean_page.get_article_content_html()
+    return header, content
+
 
 def find_sim_post_title(title):
     from text_simylarity import is_same_text
@@ -86,7 +102,7 @@ def find_sim_post_title(title):
     sim_post = []
     for f in feeds_addresses:
         feed = Feed(f)
-        posts = feed.get_all_posts()
+        posts += feed.get_all_posts()
 
     for p in posts:
 
@@ -134,22 +150,36 @@ def analyze():
     link = request.form['link_field']
     header, text, authors, publish_day, key_words = get_article_text(link)
     summary,  key_chunnks, count_s, count_w = make_summary(text)
+    img_count = get_img_cnt(link)
     kw = get_KWs(text)
-    print(kw)
+ #   print(kw)
     if publish_day == None:
         publish_day = "unknown"
 
     sim_posts = find_sim_post_title(header)
     return render_template("summary.html", link=link, header=header, summary=summary,
                            authors=authors, publish_day=publish_day, count_s=count_s,
-                           count_w=count_w, key_chunnks=key_chunnks, sim_posts=sim_posts)
+                           count_w=count_w, key_chunnks=key_chunnks, sim_posts=sim_posts,
+                           img_count=img_count)
+
+@app.route('/clean_article/', methods=['POST'])
+def clean_article():
+    link = request.form['link_field']
+    title, html_content = clean_article_content(link)
+    page ="<h1>" + title + "</h1>" + html_content
+    return (page)
+    #return  render_template("easy_read.html", title=title, html_content=html_content)
+    """
+    
+    
+    """
+
+
+
 
 @app.route('/similarity/', methods=['POST'])
 def similarity():
-    title = request.form['title_field']
-    sim_arr = find_sim_post_title(title)
-    print(len(sim_arr))
-    return ('<h1> Simularity </h1>')
+    pass
 
 if __name__ == "__main__":
     app.run(debug=True)
