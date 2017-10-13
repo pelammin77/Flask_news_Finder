@@ -13,7 +13,8 @@ class Summarizer:
         self._min_sum = min_sum
         self._max_sum = max_sum
         self._stopwords = set(stopwords.words('english') + list(punctuation))
-
+        #self._stopwords.update(['.', ',', '"', "'", '?', '!', ':', ';', '(', ')', '[', ']', '{','}'])
+        self._stopwords.update(['.', ',', '"', "'", '?', '!', ':', ';', '(', ')', '[', ']', '{', '}', '”', '“', "Advertisement"])
 
     def _compute_words(self, words_sen):
         freq = defaultdict(int)

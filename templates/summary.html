@@ -14,9 +14,12 @@
 <br>
 <div class="container">
 
-    <h1> Article summary: </h1>
-    <h2>{{header}} </h2>
+
+    <h1>{{header}} </h1>
+     <img src="{{top_image}}" style="width:304px;height:228px;">
       <div class="row">
+          <p><b><u>Summary: </u> </b></p>
+          <p>{{article_summ}}  </p>
           <div class="col-md-1">
           </div>
 
@@ -43,11 +46,19 @@
     <li><b>{{k[0]}}</b></li>
 
 </ul>
-{% endfor%}
+              {% endfor%}
+               <h2><u>Key words</u> </h2>
 
-              <h3> Article has {{count_s}} sentences</h3>
-               <h3> Article has {{count_w}} words  </h3>
-              <h3> Article has {{img_count}} image(s)</h3>
+<p>{{key_word}}</p>
+
+
+              <h2>Document readability</h2>
+              <h4> Article has {{count_s}} sentences</h4>
+               <h4> Article has {{count_w}} words  </h4>
+            <!--  <h3> Article has {{img_count}} image(s)</h3>-->
+              <h4>Flesch ease rating: {{rd_text}}</h4>
+              <h4>Flesch score: {{fleash_ease_score}}</h4>
+              <h4>Flesch–Kincaid grade level: {{fleash_grade}}</h4>
           </div>
           </div>
 
@@ -94,6 +105,11 @@
      <div class="well">
     <ul>
         <li><h3>{{sp.title}}</h3> <a href={{sp.link}}> {{sp.link}}</a></li>
+        <form method="post" action="{{ url_for('analyze') }}">
+          <input type="hidden" readonly="readonly" name="link_field" size="100" value="{{sp.link}}" />
+         <input type="submit" value=" Make summary" />
+       </form>
+
  </ul>
     </div>
 {% endfor%}

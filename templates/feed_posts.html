@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block page_content %}
+{% include "navBar.html" %}
+{% include "sideBar.html" %}
+<div class="col-md-8 paddingTop20">
+
+<h1> {{title}} </h1>
+
+<h2>Feed has {{posts|length}} articles</h2>
+  <hr>
+{% for p in posts %}
+  <h3><a href="{{p.link}}">{{p.title}}</a></h3>
+  <form method="post" action="{{ url_for('analyze') }}">
+    <input type="hidden" readonly="readonly" name="link_field" size="1" value="{{p.link}}" /><br />
+    <input type="submit" value="Summary" />
+</form>
+
+  {% endfor %}
+
+</div>
+ {% endblock %}
+
+
+

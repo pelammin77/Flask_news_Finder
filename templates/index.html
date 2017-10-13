@@ -7,13 +7,24 @@
       <h1>Find news </h1>
       <h3>Available feeds are:</h3>
         {% for name in feeds_names %}
-            <p><a>{{loop.index}}.<b>{{name}}</b></a></p>
+            <p><a href="{{url_for('feed_posts', feed_id=loop.index-1)}}">{{loop.index}}.<b>{{name}}</b></a></p>
+
         {% endfor %}
+
+      <h2>Recent news</h2>
+      <hr>
     {% include "newsArea.html" %}
   </div>
+<!--
  <div class="col-md-4 paddingTop20">
 {% include "footer.html" %}
 
  </div>
+ -->
     {% endblock %}
 
+
+<!--
+
+<a href = {{ url_for(find_question,question_id=1) }}>Question 1</a>
+-->
